@@ -12,9 +12,22 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setSuccess("");
+    setError("");
     const email = event.target.email.value;
     const password = event.target.password.value;
 
+    // validate
+
+    if (!/(?=.*[A-Z])/.test(password)) {
+      setError("Please add at least one uppercase");
+      return;
+    } else if (!/(?.*[0-9].*[0-9])/.test(password)) {
+      setError("please add at least two numbers");
+      return;
+    } else if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
     // Create user in firebase
 
     createUserWithEmailAndPassword(auth, email, password)
